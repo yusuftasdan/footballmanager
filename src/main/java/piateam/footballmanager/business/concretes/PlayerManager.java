@@ -45,13 +45,13 @@ public class PlayerManager implements PlayerService {
 	@Override
 	public Result add(PlayerAddDto playerAddDto) {
 		Player player = modelMapper.map(playerAddDto, Player.class);
-		if (this.playerDao.countByTeam_Id(player.getTeam().getId()) > 18) {
+		if (this.playerDao.countByTeam_Id(player.getTeam().getId()) == 18) {
 			return new ErrorResult("Oyuncu Eklenemedi. Takımda 18 oyuncu bulunmakta.");
 		} else if (player.getNationality().getId() == 2
-				&& this.playerDao.countByTeam_IdAndNationality_Id(player.getTeam().getId(), 2) > 6) {
+				&& this.playerDao.countByTeam_IdAndNationality_Id(player.getTeam().getId(), 2) == 6) {
 			return new ErrorResult("Oyuncu Eklenemedi. Takımda 6 yabancı uyruklu oyuncu bulunmakta.");
 		} else if (player.getPosition().getId() == 1
-				&& this.playerDao.countByTeam_IdAndPosition_Id(player.getTeam().getId(), 1) > 2) {
+				&& this.playerDao.countByTeam_IdAndPosition_Id(player.getTeam().getId(), 1) == 2) {
 			return new ErrorResult("Oyuncu Eklenemedi. Takımda 2 kaleci bulunmakta.");
 		} else {
 			this.playerDao.save(player);
